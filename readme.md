@@ -110,8 +110,7 @@ the prerequisites are:
 
    this is going to take a while, so go take a walk or go bother one of your colleagues near your cubicle!
    the beauty of this container approach is that if you need to change any of the build steps, you don't need to start from scratch. Docker knows the layering order and starts from the closest one to where you made the change.
-    
-    When that is completed you can build the second image by passing all of the necessary arguments (replace with your own serial numbers):
+   When that is completed you can build the second image by passing all of the necessary arguments (replace with your own serial numbers):
 
             docker build -t dms . -f Dockerfile_DMS --build-arg PIDKEY='SERVERSERIAL' --build-arg MOBILITY_PIDKEY='MOBILITYSERIAL' --build-arg SDK_LICENSE_PIDKEY='SDKSERIAL' --build-arg APACHE_SERVER_NAME='dms.test.lab' --build-arg CLUSTERING_PIDKEY='CLUSTERINGSERIAL' --build-arg SSLCERT='c:\INSTALL\work-cert.crt' --build-arg SSLKEY='c:\INSTALL\work-key.key'
 
