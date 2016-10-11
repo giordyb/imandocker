@@ -4,26 +4,30 @@ How to run iManage Work on Windows Containers
 ***WARNING: DO NOT RUN IN A PRODUCTION ENVIRONMENT - THIS IS FOR DEV/DEMO ENVIRONMENTS ONLY***
 
 Here are some example instructions on how to create a dev/test environment for iManage Work (currently at ver 9.4) running under the new Containers feature of Windows Server 2016.
+
+With these files and scripts I've been able to "containerize" the SQL Server, the Work Server and the Indexer (IDOL) Server, albeit with a few limitations.
+
 I have intentionally left out any iManage Work binaries or configuration files, but if you are an iManage partner or customer I'm sure you know where to get them...
+
+I also expect you to have a Windows Server 2016/Windows 10 VM or physical server/laptop running with the container feature installed and the docker binaries already working.
+If you need to know how to do that you should read [this](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start) first.
 
 Each folder in this repository contains the scripts and dockerfiles needed to get started.
 
-With this configuration I've been able to "containerize" the SQL Server, the Work Server and the Indexer (IDOL) Server, albeit with a few limitations.
+For the networking I'm using [transparent mode](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/management/container_networking#transparent-network) so that I can talk directly to ther VMs that I am running in the same network.
 
-For the networking I'm using transparent mode so that I can talk directly to ther VMs running in the same network.
-
-**gotchas**:
+**GOTCHAS:**
 
 * the Docker build process on Windows does not like paths with spaces in them, so I had to rename some of the iManage install MSIs in order to get around this issue.
 
-* since the containers are non-persistent I am saving the SQL database and Work Server library files on the container host *BUT THEY ARE SEEN BY THE CONTAINERS AS BEING LOCAL (C:\DMSSHARE)*. Since the DB Admin won't let you do that (it only accepts smb paths) you will need to change the path later with SQL Server Manager.
+* since the containers are non-persistent the metadata is saved on the MSSQL database and the Work library files on a folder on the container host _BUT THEY ARE SEEN BY THE CONTAINERS AS BEING LOCAL (C:\DMSSHARE)_. Since the DB Admin tool won't let you do that (it only accepts smb paths) you will need to change the path later with SQL Server Manager.
 
 * the IDOL is non-persistent and re-crawls the library every time it starts.
 
-* containers have no GUI, so all of the iManage Work configuration is done with Powershell scripts and registry keys imports.
+* containers have no GUI, so all of the iManage Work configuration is ~~hacked together~~ handled with  Powershell scripts and registry keys imports.
 
-* the configuration tools (iManage Service Manager) do not work (probably because the container is not a full windows VM thus is not reachable via RPC). In order to build the images you will need to gather some files and registry keys from an already existing iManage Work environment. 
-What I've done is install the DMS and Indexer on a VM, configured what I needed using the iManage GUI tools (iManage Service Manager, DB Admin, SQL Manager, IDOL Deploy tool, etc)then export what I needed accordingly. 
+* the configuration tools (iManage Service Manager) do not work remotely (probably because the container is not a full windows VM thus is not reachable via RPC). In order to build the images you will need to gather some files and registry keys from an already existing iManage Work environment. 
+What I've done is install the DMS and Indexer on a VM, configured what I needed using the iManage GUI tools (iManage Service Manager, DB Admin, SQL Manager, IDOL Deploy tool, etc) then export what I needed accordingly. 
 To ease the pain I've configured the Work Server container to import a registry file at runtime.
 
 * **all commands are run in Powershell**
@@ -34,11 +38,11 @@ Enough talk, let's get started!
 
 SQL Server:
 -----------
-Running a Microsoft SQL Server container is pretty easy since there is an image already built for us by the folks at Microsoft! You just need to drop the database files, pass a few parameters and it will start up right away.
+Running a Microsoft SQL Server container is pretty easy since there is an image already built for us by the folks at Microsoft! You just need to drop the database files, pass a few parameters and it will start up right away. No need for the usual 30 minutes install.
 
-* This container uses the microsoft/mssql-server-2016-developer-windows image provided by Microsoft. if you have not already done so please download it via
+* This container uses the microsoft/mssql-server-2016-express-windows image provided by Microsoft. if you have not already done so please download it by running
     
-        docker pull microsoft/mssql-server-2016-developer-windows
+        docker pull microsoft/mssql-server-2016-express-windows
 
 * create a new iManage DB (called ACTIVE) on another host via the database administrator and copy the ACTIVE.mdf and ACTIVE_log.mdf files in the iManDB folder.
 
