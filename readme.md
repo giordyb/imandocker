@@ -110,8 +110,8 @@ the prerequisites are:
 
    this is going to take a while, so go take a walk or go bother one of your colleagues near your cubicle!
    the beauty of this container approach is that if you need to change any of the build steps, you don't need to start from scratch. Docker knows the layering order and starts from the closest one to where you made the change.
-
-    when that is completed you can build the second image by passing all of the necessary arguments (replace with your own serial numbers):
+    
+    When that is completed you can build the second image by passing all of the necessary arguments (replace with your own serial numbers):
 
             docker build -t dms . -f Dockerfile_DMS --build-arg PIDKEY='SERVERSERIAL' --build-arg MOBILITY_PIDKEY='MOBILITYSERIAL' --build-arg SDK_LICENSE_PIDKEY='SDKSERIAL' --build-arg APACHE_SERVER_NAME='dms.test.lab' --build-arg CLUSTERING_PIDKEY='CLUSTERINGSERIAL' --build-arg SSLCERT='c:\INSTALL\work-cert.crt' --build-arg SSLKEY='c:\INSTALL\work-key.key'
 
@@ -119,21 +119,21 @@ the prerequisites are:
 
             docker -v run -it --rm --name dms1 -v "$pwd/dmsshare/:c:\dmsshare\" --network=transparent --ip 192.168.145.135 --dns 192.168.145.236 dms
 
-when the image runs it executs the start-dms.ps1 script which imports the self-signed cert, does an invoke-webrequest for the web interface (I don't know why but the Work Server won't start until it gets a reqeust on its interface...might be a bug) and then displays the logfiles on the console.
+    when the image runs it executs the start-dms.ps1 script which imports the self-signed cert, does an invoke-webrequest for the web interface (I don't know why but the Work Server won't start until it gets a reqeust on its interface...might be a bug) and then displays the logfiles on the console.
 
-if you are successfully you should see something like this:
+    if you are successfully you should see something like this:
 
   ![alt](rundms1.gif)
 
-**the cool thing is that if you want to run another instance of the DMS (and have it join the cluster) you can just re-run the same command with another ip address and container instance name and it will automatically join! (as long as it's in the DNS of course...)**
+    **the cool thing is that if you want to run another instance of the DMS (and have it join the cluster) you can just re-run the same command with another ip address and container instance name and it will automatically join! (as long as it's in the DNS of course...)**
 
             docker -v run -it --rm --name dms2 -v "$pwd/dmsshare/:c:\dmsshare\" --network=transparent --ip 192.168.145.136 --dns 192.168.145.236 dms 
 
-result: (you can see in the fma logs that the node is leaving after i stop the imdmssvc service)
+    result: (you can see in the fma logs that the node is leaving after i stop the imdmssvc service)
 
-![alt](dockercluster.gif)
+    ![alt](dockercluster.gif)
 
-the cluster works because even though we're saving the library files to the C:\ drive it's actually mapped to a folder on the host, thus making it look like a windows share that both cluster nodes can see.
+    the cluster works because even though we're saving the library files to the C:\ drive it's actually mapped to a folder on the host, thus making it look like a windows share that both cluster nodes can see.
 
 ---
 
