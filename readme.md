@@ -13,6 +13,7 @@ With this configuration I've been able to "containerize" the SQL Server, the Wor
 For the networking I'm using transparent mode so that I can talk directly to ther VMs running in the same network.
 
 **gotchas**:
+
 * the Docker build process on Windows does not like paths with spaces in them, so I had to rename some of the iManage install MSIs in order to get around this issue.
 
 * since the containers are non-persistent I am saving the SQL database and Work Server library files on the container host *BUT THEY ARE SEEN BY THE CONTAINERS AS BEING LOCAL (C:\DMSSHARE)*. Since the DB Admin won't let you do that (it only accepts smb paths) you will need to change the path later with SQL Server Manager.
