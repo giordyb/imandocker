@@ -4,6 +4,7 @@ How to run iManage Work on Windows Containers
 ***WARNING: DO NOT RUN IN A PRODUCTION ENVIRONMENT - THIS IS FOR DEV/DEMO ENVIRONMENTS ONLY***
 
 Here are some example instructions on how to create a dev/test environment for iManage Work (currently at ver 9.4) running under the new Containers feature of Windows Server 2016.
+I have intentionally left out any iManage Work binaries or configuration files, but if you are an iManage partner or customer I'm sure you know where to get them...
 
 Each folder in this repository contains the scripts and dockerfiles needed to get started.
 
@@ -194,7 +195,7 @@ This just came out but by looking at the instructions it shouldn't be too hard t
 
 *WRAP UP*
 
-Hopefully you were able to get everything running...if you have any questions please feel free to write me an email, I'll try to help as best as I can.
+Hopefully you were able to get everything running...if you have any questions please feel free to write me an email at giordy_at_giordy.it, I'll try to help as best as I can.
 
 *Next Up*
 
