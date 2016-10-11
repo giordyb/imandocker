@@ -50,11 +50,14 @@ Running a Microsoft SQL Server container is pretty easy since there is an image 
 
 * start the container with
 
-         docker run -it --name sql --network=transparent --rm --ip 192.168.145.100 --env sa_password="Passw0rd" -v "$pwd/iManDB/:C:/temp/" --env attach_dbs="[{'dbName':'ACTIVE','dbFiles':['C:\\temp\\active.mdf','C:\\temp\\active_log.ldf']}]" microsoft/mssql-server-2016-developer-windows
+         docker run -it --name sql --network=transparent --rm --ip 192.168.145.100 --env sa_password="Passw0rd" -v "$pwd/iManDB/:C:/temp/" --env attach_dbs="[{'dbName':'ACTIVE','dbFiles':['C:\\temp\\active.mdf','C:\\temp\\active_log.ldf']}]" microsoft/mssql-server-2016-express-windows
 
 at this point you will see the sql server start up, with the SA password that we specified and the ACTIVE database already attached!
 
 ![alt](runsql.gif)
+
+*in the .gif it says "microsoft/mssql-server-2016-developer-windows". I originally used this image but it's not available anymore.*
+
 
 ---
 

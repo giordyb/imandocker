@@ -51,8 +51,8 @@ Invoke-WebRequest -uri https://127.0.0.1 -Method get
 Start-Sleep -Seconds 3
 
 while ($true) {
-    if (Test-Path -Path "C:\Program Files\Autonomy\WorkSite\Server\Logs\FmaLog.txt"){
-        get-content "C:\Program Files\Autonomy\WorkSite\Server\Logs\FmaLog.txt" -wait
+    if (Test-Path -Path "C:\Program Files\Autonomy\WorkSite\Server\Logs\DmsLog.txt"){
+        get-content "C:\Program Files\Autonomy\WorkSite\Server\Logs\DmsLog.txt" -wait
     }
     Start-Sleep -Seconds 1
 }
