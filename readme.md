@@ -7,7 +7,7 @@ Here are some example instructions on how to create a dev/test environment for i
 
 With these files and scripts I've been able to "containerize" the SQL Server, the Work Server and the Indexer (IDOL) Server, albeit with a few limitations.
 
-I have intentionally left out any iManage Work binaries or configuration files, but if you are an iManage partner or customer I'm sure you know where to get them...
+I have intentionally left out any iManage Work binaries, configuration files, and serial numbers, but if you are an iManage partner or customer I'm sure you know where to get them...
 
 I also expect you to have a Windows Server 2016/Windows 10 VM or physical server/laptop running with the container feature installed and the docker binaries already working.
 If you need to know how to do that you should read [this](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start) first.
