@@ -54,9 +54,9 @@ function Disable-SSLValidation {
 Add-OdbcDsn -Name ACTIVE -Drivername "SQL Server" -Platform '64-bit' -DSNType System -SetPropertyValue @("Server=$sqlserver","Trusted_Connection=No", "Database=ACTIVE")
 [Environment]::SetEnvironmentVariable("REQUESTS_CA_BUNDLE", "C:\Program Files\Autonomy\WorkSite\Server\work-cert.crt", [EnvironmentVariableTarget]::Machine)
 
-[Environment]::SetEnvironmentVariable("PLUGIN0_ENDPOINT", "http://$previewserver:8080", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("PLUGIN0_ENDPOINT", "http://$($previewserver):8080", [EnvironmentVariableTarget]::Machine)
 [Environment]::SetEnvironmentVariable("JRE_HOME", "C:\Program Files\Java\jre1.8.0_101\", [EnvironmentVariableTarget]::Machine)
-$env:PLUGIN0_ENDPOINT = "http://$previewserver:8080"
+$env:PLUGIN0_ENDPOINT = "http://$($previewserver):8080"
 $env:JRE_HOME = "C:\Program Files\Java\jre1.8.0_101\"
 $env:REQUESTS_CA_BUNDLE = "C:\Program Files\Autonomy\WorkSite\Server\work-cert.crt"
 
@@ -67,7 +67,7 @@ Set-Content -path "C:\Program Files\Autonomy\WorkSite\Apache\conf\worksite.conf"
 
 #reconfigure rendition file
 $rendcontent = Get-Content "C:\Program Files\iManage\MicroServicesHub\config\rendition.cfg"
-$rendcontent = $rendcontent.replace('end_point = http://localhost:8080','end_point = http://$previewserver:8080')
+$rendcontent = $rendcontent.replace('end_point = http://localhost:8080',"end_point = http://$($previewserver):8080")
 Set-Content -path "C:\Program Files\iManage\MicroServicesHub\config\rendition.cfg" -Value $rendcontent
 
 #workaround
