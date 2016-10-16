@@ -1,1 +1,0 @@
-Add-OdbcDsn -Name ACTIVE -Drivername "SQL Server" -Platform '64-bit' -DSNType System -SetPropertyValue @("Server=192.168.145.100","Trusted_Connection=No", "Database=ACTIVE")

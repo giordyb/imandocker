@@ -1,8 +1,6 @@
 FROM microsoft/windowsservercore
 RUN mkdir c:\INSTALL
 ADD INSTALL c:\INSTALL
-ADD adddsn.ps1 .
-RUN powershell.exe -File adddsn.ps1
 WORKDIR C:\\INSTALL
 RUN powershell -Command \
 copy-item -Path c:\INSTALL\mapi32.dll -Destination c:\windows\system32\mapi32.dll

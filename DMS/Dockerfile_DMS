@@ -2,13 +2,21 @@ FROM dmsbase
 ARG PIDKEY
 ARG MOBILITY_PIDKEY
 ARG SDK_LICENSE_PIDKEY
-ARG APACHE_SERVER_NAME
-ARG SSLCERT
-ARG SSLKEY
 ARG CLUSTERING_PIDKEY
+ARG APACHE_SERVER_NAME
+ENV SQLSERVER _
+ENV PREVIEWSERVER _
 RUN mkdir C:\dmsshare
-RUN c:\windows\system32\msiexec.exe /qn /i imanage.msi PIDKEY=%PIDKEY% MOBILITY_PIDKEY=%MOBILITY_PIDKEY% SDK_LICENSE_PIDKEY=%SDK_LICENSE_PIDKEY% APACHE_SERVER_NAME=%APACHE_SERVER_NAME% SSLCERT=%SSLCERT% SSLKEY=%SSLKEY%
+RUN c:\windows\system32\msiexec.exe /qn /i imanage.msi PIDKEY=%PIDKEY% MOBILITY_PIDKEY=%MOBILITY_PIDKEY% SDK_LICENSE_PIDKEY=%SDK_LICENSE_PIDKEY% APACHE_SERVER_NAME=%APACHE_SERVER_NAME% SVRCONFIG_OPTIONS=generate
+RUN powershell stop-service imdmssvc
 RUN c:\windows\system32\msiexec.exe /qn /i clustering.msi SERIALNUMBER=%CLUSTERING_PIDKEY%
+RUN C:\windows\system32\msiexec.exe /qn /i SetupMicroServices.msi
+RUN powershell stop-process -name httpd -Force
+RUN powershell Set-Service -Name imdmssvc -StartupType Manual
+RUN powershell Set-Service -Name activemq -StartupType Manual
+RUN powershell Set-Service -Name iManageMicroServiceHub -StartupType Manual
+RUN powershell Set-Service -Name imfmasvc -StartupType Manual
+RUN powershell Set-Service -Name imDsSyncSvc -StartupType Manual
 VOLUME c:\\dmsshare
 ADD startdms.ps1 . 
-CMD powershell ./startdms
+CMD powershell ./startdms -sqlserver %SQLSERVER%

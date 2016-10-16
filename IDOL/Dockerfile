@@ -14,7 +14,6 @@ WORKDIR c:\\INSTALL\\deploy
 ADD reconfigurejvmpath.ps1 .
 RUN powershell ./reconfigurejvmpath
 RUN _deploy_services.bat
-#RUN _install_services.bat
 ADD install_services.ps1 .
 RUN powershell ./install_services
 WORKDIR c:\\INSTALL

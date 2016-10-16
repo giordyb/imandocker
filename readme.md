@@ -80,6 +80,7 @@ the prerequisites are:
     * vc_2013_redist_x64.exe
     * Redis-x64-3.0.500.msi
     * jre-8u101-windows-x64.exe
+    * SetupMicroServices.msi
 
     you will also need to place fhe following in the install folder:
 
@@ -100,9 +101,7 @@ the prerequisites are:
 
 3. Create a folder called DMSShare at the same level of the INSTALL folder and place the registry key export *(it expects a file called imanage.reg)* inside it. This will be needed at runtime to configure the DMS.
 
-4. edit the adddsn.ps1 script and modify the IP address of your SQL Server
-
-5. Since Work Server has so many prerequisites I split the container in 2 images, one that has all of the prerequisites and another one that has just the Work Server install. Since the second one depends on the first one we're not actually wasting any space.
+4. Since Work Server has so many prerequisites I split the container in 2 images, one that has all of the prerequisites and another one that has just the Work Server install. Since the second one depends on the first one we're not actually wasting any space.
 
     To get started with building the base image run the following commands:
 
@@ -113,11 +112,11 @@ the prerequisites are:
 
    When that is completed you can build the second image by passing all of the necessary arguments (replace with your own serial numbers):
    
-            docker build -t dms . -f Dockerfile_DMS --build-arg PIDKEY='SERVERSERIAL' --build-arg MOBILITY_PIDKEY='MOBILITYSERIAL' --build-arg SDK_LICENSE_PIDKEY='SDKSERIAL' --build-arg APACHE_SERVER_NAME='dms.test.lab' --build-arg CLUSTERING_PIDKEY='CLUSTERINGSERIAL' --build-arg SSLCERT='c:\INSTALL\work-cert.crt' --build-arg SSLKEY='c:\INSTALL\work-key.key'
+            docker build -t dms . -f Dockerfile_DMS --build-arg PIDKEY='SERVERSERIAL' --build-arg MOBILITY_PIDKEY='MOBILITYSERIAL' --build-arg SDK_LICENSE_PIDKEY='SDKSERIAL' --build-arg APACHE_SERVER_NAME='dms.test.lab' --build-arg CLUSTERING_PIDKEY='CLUSTERINGSERIAL'
 
-6. once the image is built (hopefully you didn't get any errors) you can run it via the following command:
+5. once the image is built (hopefully you didn't get any errors) you can run it via the following command. replace sql_server_ip and preview_server_ip with your own:
 
-            docker -v run -it --rm --name dms1 -v "$pwd/dmsshare/:c:\dmsshare\" --network=transparent --ip 192.168.145.135 --dns 192.168.145.236 dms
+            docker -v run -it --env=sqlserver="sql_server_ip" --env=previewserver="preview_server_ip" --rm --name dms1 -v "$pwd/dmsshare/:c:\dmsshare\" --network=transparent --ip 192.168.145.135 --dns 192.168.145.236 dms
 
    when the image runs it executs the start-dms.ps1 script which imports the self-signed cert, does an invoke-webrequest for the web interface (I don't know why but the Work Server won't start until it gets a reqeust on its interface...might be a bug) and then displays the logfiles on the console.
 
@@ -195,7 +194,7 @@ I don't think this can be done in a container since it requires the SMTP server,
 
 *Preview Server:*
 
-I cannot get the installer to run in silent/unattend mode and I haven't had time to analyze the install to se if it can be replicated by copying the files by hand.
+I cannot get the installer to run in silent/unattend mode and I haven't had time to analyze the install to se if it can be replicated by copying the files by hand. I changed the configuration so that the dms points to an external preview server (running on the host)
 
 *OCR Module:*
 
