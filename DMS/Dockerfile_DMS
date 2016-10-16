@@ -17,6 +17,8 @@ RUN powershell Set-Service -Name activemq -StartupType Manual
 RUN powershell Set-Service -Name iManageMicroServiceHub -StartupType Manual
 RUN powershell Set-Service -Name imfmasvc -StartupType Manual
 RUN powershell Set-Service -Name imDsSyncSvc -StartupType Manual
+ADD jre.reg .
+RUN regedit /s jre.reg
 VOLUME c:\\dmsshare
 ADD startdms.ps1 . 
 CMD powershell ./startdms -sqlserver %SQLSERVER%

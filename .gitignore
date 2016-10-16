@@ -4,3 +4,4 @@ SQL/
 docker-compose.yaml
 .DS_Store
 RUNFILES/*
+DOCKERDATA/*

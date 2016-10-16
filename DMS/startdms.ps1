@@ -77,7 +77,6 @@ Add-Content c:\windows\system32\drivers\etc\hosts "$myip  dms.test.lab"
 
 #Copy-Item -Path "c:\dmsshare\web_module" -Destination "C:\Program Files\Autonomy\WorkSite" -Recurse -Force
 regedit /s c:\dmsshare\imanage.reg
-regedit /s c:\dmsshare\jre.reg
 #stop-service -Name imfmasvc
 #stop-service -Name iManageMicroServiceHub
 #remove-item -Path "C:\Program Files\Autonomy\WorkSite\Server\Logs\FmaLog.txt"
