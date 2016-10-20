@@ -2,6 +2,7 @@ FROM microsoft/windowsservercore
 ENV sqlserver _
 ENV defaulthost _
 VOLUME c:\\dmsshare
+RUN sc config lanmanworkstation depend= "MrxSmb20/NSI"
 RUN mkdir c:\INSTALL
 ADD INSTALL c:\INSTALL
 RUN powershell -Command \

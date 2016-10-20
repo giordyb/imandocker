@@ -2,6 +2,7 @@ FROM microsoft/windowsservercore
 RUN mkdir c:\INSTALL
 ADD INSTALL c:\INSTALL
 WORKDIR C:\\INSTALL
+RUN sc config lanmanworkstation depend= "MrxSmb20/NSI"
 RUN powershell -Command \
 copy-item -Path c:\INSTALL\mapi32.dll -Destination c:\windows\system32\mapi32.dll
 RUN vc2008sp1redist_x64.exe /Q

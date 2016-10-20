@@ -21,4 +21,4 @@ ADD jre.reg .
 RUN regedit /s jre.reg
 VOLUME c:\\dmsshare
 ADD startdms.ps1 . 
-CMD powershell ./startdms -sqlserver %SQLSERVER%
+CMD powershell ./startdms -sqlserver %SQLSERVER% -previewserver %PREVIEWSERVER%
