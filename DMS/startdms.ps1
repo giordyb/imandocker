@@ -85,7 +85,7 @@ Start-Service -Name imDmsSvc
 Disable-SSLValidation
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 import-certificate -FilePath "C:\Program Files\Autonomy\WorkSite\Server\work-cert.crt" -CertStoreLocation Cert:\LocalMachine\Root
-Invoke-WebRequest -uri https://127.0.0.1 -Method get
+#Invoke-WebRequest -uri https://127.0.0.1 -Method get
 
 Start-Sleep -Seconds 3
 
