@@ -185,6 +185,12 @@ Again, this works because I've mapped the folder where the data is located ON TH
 
 ---
 
+Preview Server
+-----------
+
+I managed to get the preview server working! just needs to copy the tomcat directory from a working install and some files that are in c:\dps\conf.
+Everything else is pretty self-explanatory from the dockerfile.
+Since I don't have the servers registered in DNS (I'm waiting for the service registration feature of docker to make it into the windows version) I have to add the DMS FQDN in the preview server's hosts file, if not it rejects the call.
 
 **What's Missing**
 
@@ -192,9 +198,6 @@ Again, this works because I've mapped the folder where the data is located ON TH
 
 I don't think this can be done in a container since it requires the SMTP server, which (for reasons unknown to me) cannot be added to a window server container image.
 
-*Preview Server:*
-
-I cannot get the installer to run in silent/unattend mode and I haven't had time to analyze the install to se if it can be replicated by copying the files by hand. I changed the configuration so that the dms points to an external preview server (running on the host)
 
 *OCR Module:*
 
