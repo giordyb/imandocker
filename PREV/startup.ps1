@@ -1,4 +1,4 @@
-$env:JAVA_HOME = "C:\Program Files\Java\jdk1.8.0_101\"
+$env:JRE_HOME = "C:\INSTALL\jre1.8.0_101\"
 cd c:\install\tomcat\bin\ 
 .\startup.bat
 while (!(Test-Path c:\dps\logs\dps.log.0)) {

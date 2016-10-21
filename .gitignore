@@ -1,6 +1,7 @@
 COMM/*
 SQL/
-docker-compose.yaml
+*.yaml
 .DS_Store
 RUNFILES/*
 DOCKERDATA/*
+.env
