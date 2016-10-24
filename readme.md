@@ -210,17 +210,3 @@ Hopefully you were able to get everything running...if you have any questions pl
 *Next Up*
 
 get it running on a docker swarm!!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
